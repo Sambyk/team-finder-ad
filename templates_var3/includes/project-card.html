@@ -1,0 +1,42 @@
+{% load static %}
+
+{% if project and project.id %}
+<div class="project-card">
+    <div class="project-card-header-title">
+        <div class="project-card-header">
+            <div class="project-owner-grid">
+                {% if project.owner.avatar %}
+                    <img src="{{ project.owner.avatar.url }}" alt="Аватар" class="avatar">
+                {% else %}
+                    <img src="{% static 'images/default-avatar.png' %}" alt="Аватар по умолчанию" class="avatar">
+                {% endif %}
+                <div class="project-owner">
+                    <a href="{% url 'users:user_detail' project.owner.id %}">{{ project.owner.name }} {{ project.owner.surname }}</a>
+                    <small class="project-date">{{ project.created_at|date:"d.m.Y" }}</small>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="project-card-title">{{ project.name }}</h3>
+    </div>
+
+    <p class="project-card-description">{{ project.description|truncatechars:150 }}</p>
+
+    <div class="project-card-footer">
+        <span class="project-status-black">
+            {% if project.status == "open" %}
+                Открыт
+            {% elif project.status == "closed" %}
+                Закрыт
+            {% else %}
+                {{ project.status }}
+            {% endif %}
+        </span>
+        <div class="project-participants">
+            {% include 'includes/svg/participants.html' %}
+            {{ project.participants.count }}
+        </div>
+        <a href="{% url 'projects:project_detail' project.id %}" class="black-button" style="margin-left: auto;">Перейти</a>
+    </div>
+</div>
+{% endif %}
