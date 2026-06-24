@@ -95,6 +95,15 @@ docker compose down
 
 Если возникает ошибка "permission denied while trying to connect to the Docker daemon socket", то может потребоваться добавить `sudo` перед командой.
 
+Если контейнер с именем teamfinder_db уже существует (от предыдущего запуска в другой папке). Нужно его остановить и удалить.
+
+
+```bash
+docker stop teamfinder_db
+docker rm teamfinder_db
+
+```
+
 ---
 
 После этого база данных будет доступна по адресу `localhost:5432`.  
